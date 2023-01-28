@@ -1,5 +1,10 @@
 # Project Tip Calculator
 
+# 仮想環境使ってないので、わざとこの記述をしている。
+import sys
+sys.path.append('../utils')
+from input_helper import int_input, float_input
+
 # options wihich is percentages of tip
 PERCENTAGES = [10, 12, 15]
 
@@ -16,25 +21,6 @@ def main():
 
     print(f'Each person should pay: {total_with_tip:.2f}')
 
-
-def float_input(message):
-    retval = None
-
-    while not retval:
-        try:
-            retval = float(input(message))
-        except: print("You should input the number")
-
-    return retval
-
-def int_input(message):
-    retval = None
-    
-    while not retval: 
-        try:
-            return int(input(message))
-        except:
-            print("You should input the number")
             
 def is_in_options(percentage):
     if percentage in PERCENTAGES: return True
