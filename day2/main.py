@@ -17,9 +17,11 @@ def main():
 
     num_people = int_input("How many people to split the bill? ")
 
-    total_with_tip = (total + total * percentage) / num_people
-
-    print(f'Each person should pay: {total_with_tip:.2f}')
+    total_with_tip = total + total * percentage 
+    
+    each_person_total = total_with_tip / num_people
+    
+    print(f'Each person should pay: {each_person_total:.2f}')
 
             
 def is_in_options(percentage):
@@ -35,13 +37,13 @@ def percentage_input(message):
     percentage = None
     while (not percentage):
         user_input = int_input(message)
-        # options means the constant called OPTIONS
-        flg = is_in_options(user_input)
-        if flg:
+        # HACK:名前
+        is_ok = is_in_options(user_input)
+        if is_ok:
             percentage = to_parcentage(user_input)
             return percentage
         else: 
-            print('select a num in options')
+            print(f'select a num in {PERCENTAGES[0]}, {PERCENTAGES[1]}, {PERCENTAGES[2]}')
         
     
 

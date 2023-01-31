@@ -27,28 +27,47 @@ def main():
     print("Welcome to Treasure Island.")
     print("Your mission is to find the treasure.") 
 
-    # 1st Step
-    choice1 = input('You are at crossroad, where do you want to go ?'
-                    'Type "Left" or "Right" ')
-    if not choice1 == 'Left':
-        print('Game Over')
+    # Round 1
+    while True:
+        choice1 = input('You are at crossroad, where do you want to go ?'
+                        'Type "Left" or "Right" ')
+        if choice1 == 'Right':
+            print('Good Choice')
+            break
+        elif choice1 == 'Left':
+            print('Game Over')
+            break
+        else:
+            print('Wrong input')
     
-    # 2nd Step
-    choice2 = input("You've come to lake." 
-                    'There is island in the middle of the lake.'
-                    'Type "Wait" to wait for a boat.'
-                    'Type "Swim" to swim across. ')
-    if not choice2 == 'Wait':
-        print('Game Over')
+    
+    # Round 2
+    while True:
+        choice2 = input("You've come to lake." 
+                        'There is island in the middle of the lake.'
+                        'Type "Wait" to wait for a boat.'
+                        'Type "Swim" to swim across. ')
+        if  choice2 == 'Wait':
+            print('Good Choice')
+            break
+        elif choice2 == 'Swim':
+            print('Game Over')
+            break
+        else:
+            print('Wrong input')
 
-    # 3rd step
+    # Round3
+    doors = ['red', 'yello', 'blue']
     choice3 = input('You arrive at the unharmed.'
                     'There is a house with 3 doors.'
                     'One red, One yello, One blue'
                     'Which door do you choose? ')
     if choice3 == 'yello':
         print('You win!')
-    else: print('Game Over')
+    elif not choice3 in doors:
+        print('Wrong input')
+    else: 
+        print('Game Over')
     
 if __name__ == '__main__':
     main()

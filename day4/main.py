@@ -11,7 +11,6 @@ from input_helper import int_input
 
 
 
-
 rock = '''
     _______
 ---'   ____)
@@ -47,19 +46,23 @@ HANDS = [rock, scissors, paper]
 judge = ['DRAW!', 'YOU LOSE 😞', 'YOU WIN 🎉']
 
 def main():
-    while(1):
+    # ask player's choice
+    while True:
+        # get input
         player = int_input('What do you choose? Type 0 for Rock, 1 for Scissors or 2 for Papper')
+        # handle error
         if 0 <= player <= 2: break
         else: print('input number in 0, 1, 2')
     
+    # output user's hand
     print(HANDS[player])
     print('*** Your Hand ***')
     
+    # take a pause
     time.sleep(1)
     
+    # output computer's choice
     computer = random.randint(0, 2)
-    
-    
     print(HANDS[computer])
     print('*** Computer\'s Hand ***')
     
@@ -67,9 +70,8 @@ def main():
     judge_index = (player - computer) % 3
     print(judge[judge_index])
     
-    # simplest edition
+    # simple edition to understand
     '''
-    
     # 基本のplayerが勝つパターン
     if computer < player:
         pirnt('YOU WIN')
