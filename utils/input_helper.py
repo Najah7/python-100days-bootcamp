@@ -39,7 +39,6 @@ def yes_no_input(message):
     while(1):
             user_input = input(message)
             # handle starting with "y" is "yes" and "n" is "no"
-            if user_input[0].upper() == 'Y':
-                return True
+            if user_input[0].upper() == 'Y': return True
             elif user_input[0].upper() == 'N': return False
             else: print("Sorry, I can't understand yor answer.")
