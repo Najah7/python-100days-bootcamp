@@ -15,7 +15,6 @@ import random
 import sys
 
 sys.path.append('../utils')
-from input_helper import int_input, yes_no_input
 from output_helper import welcome
 
 from art import TITLE_LOGO, VS_LOGO
@@ -32,32 +31,30 @@ def main():
     
     while True:
         
-        # ランダムな数を2つ生成
-        random_num1 = random.randint(0, len(data))
-        random_num2 = random.randint(0, len(data))
+        # ランダムなアカウントを2つ
+        accountA = random.choice(data)
+        accountB = random.choice(data)
         
-        # 選択肢Aを出力
-        print_choice('a', random_num1)
-        # フォロー数を記憶
-        num_a_follower = data[random_num1]['follower_count']
+        # 選択肢Aのアカウント情報を出力
+        # HACK:インターフェースのリファクタリング
+        print_account_info('a', accountA)
         
         # 飾り
         print(VS_LOGO)
         
-        # 選択肢Bを出力
-        print_choice('b', random_num2)
-        # フォロー数を記憶
-        num_b_follower = data[random_num2]['follower_count']
+        # 選択肢Bのアカウント情報を出力
+        # HACK:インターフェースのリファクタリング
+        print_account_info('b', accountB)
         
         # 大きい方の選択肢のアルファベットを返す
         # HACK：関数名、インターフェースのリファクタリング
-        answer_alpahbet = get_bigger_alphabet(num_choice_a=num_a_follower, num_choice_b=num_b_follower)
+        answer_alpahbet = get_bigger_alphabet(num_a_follower=accountA['follower_count'], num_b_follower=accountB['follower_count'])
         
         # HACK：関数名のリファクタリング
-        user_answer = a_or_b()
+        user_guess = a_or_b()
         
         
-        if answer_alpahbet.lower() == user_answer.lower():
+        if answer_alpahbet.lower() == user_guess.lower():
             current_score += 1
             print(f"You're right! Current score {current_score}")
         else:
@@ -70,28 +67,28 @@ def main():
         
     print('Bye👋')
     
-
-def print_choice(a_or_b, random_num):
+# HACK:インターフェースのリファクタリング
+def print_account_info(a_or_b, account):
     
     # print関数の文字列を短くするために変数に入れただけ
-    name = data[random_num]['name']
-    description = data[random_num]['description']
-    country = data[random_num]['country']
+    name = account['name']
+    description = account['description']
+    country = account['country']
     
     print(f"Compare {a_or_b.upper()}:{name}, {description} , from {country}.")
 
 # HACK：関数名のリファクタリング
 def a_or_b():
     while True:
-            user_answer = input("Who has more followers? Type 'A' or 'B': ")
+            user_guess = input("Who has more followers? Type 'A' or 'B': ")
             
-            if user_answer.lower() == 'a' or user_answer.lower() == 'b': return user_answer
+            if user_guess.lower() == 'a' or user_guess.lower() == 'b': return user_guess
             else: print("You need to pick 'A' or 'B' ")
 
 # HACK:関数名のリファクタリング
-def get_bigger_alphabet(num_choice_a=0, num_choice_b=0):
-    if num_choice_a > num_choice_b: return 'a'
-    elif num_choice_b > num_choice_a: return 'b'
+def get_bigger_alphabet(num_a_follower=0, num_b_follower=0):
+    if num_a_follower > num_b_follower: return 'a'
+    elif num_b_follower > num_a_follower: return 'b'
     else: return None
 
 if __name__ == '__main__':
