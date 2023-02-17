@@ -14,10 +14,14 @@ def main():
     snake.setup_snake()
     
     screen.update()
+    
+    screen.listen()
+    
     screen.onkey(snake.up,'Up')
     screen.onkey(snake.dwon,'Down')
     screen.onkey(snake.right, 'Right')
     screen.onkey(snake.left, key='Left')
+    
     # 無限ループしない用のカウンタ
     counter_for_dev = 0
     
@@ -28,13 +32,13 @@ def main():
         screen.update()
         time.sleep(0.2)
         
-        # とりあえず全身させている。
-        snake.forward()
+        snake.move()
+        
         
         
         # NOTE:無限ループしないために
-        counter_for_dev += 1
-        if counter_for_dev == 10: break
+        # counter_for_dev += 1
+        # if counter_for_dev == 10: break
             
         
 
