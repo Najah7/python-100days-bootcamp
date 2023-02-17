@@ -23,11 +23,11 @@ class Snake:
             snake_body.goto(x=position_x, y=position_y)
             position_x -= SIZE_OF_SQUARE
     
-    def forward(self):
+    def up(self):
         self.move()
         self.snake[0].forward(MOVE_DISTANCE)
     
-    def backward(self):
+    def dwon(self):
         self.move()
         self.snake[0].backward(MOVE_DISTANCE)
         
