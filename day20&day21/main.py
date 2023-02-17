@@ -1,5 +1,7 @@
 # Project Snake Game (first half)
 
+# day20 completed
+
 from turtle import Screen, Turtle
 import time
 
