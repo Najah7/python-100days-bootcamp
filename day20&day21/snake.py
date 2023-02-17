@@ -37,15 +37,21 @@ class Snake:
         self.head.forward(MOVE_DISTANCE) 
     
     def up(self):
-        self.head.setheading(UP)
+        # 来た方向に戻れないように
+        if self.head.heading() != DWON:
+            self.head.setheading(UP)
     
     def dwon(self):
-        self.head.setheading(DWON)
+        # 来た方向に戻れないように
+        if self.head.heading() != UP:
+            self.head.setheading(DWON)
         
     def left(self):
-        self.head.setheading(LEFT)
+        if self.head.heading() != RIGHT:
+            self.head.setheading(LEFT)
     
     def right(self):
-        self.head.setheading(RIGHT)
+        if self.head.heading() != LEFT:
+            self.head.setheading(RIGHT)
     
     
