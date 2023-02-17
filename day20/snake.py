@@ -4,6 +4,12 @@ from turtle import Turtle
 SIZE_OF_SQUARE = 20
 MOVE_DISTANCE = 20
 
+# use these for set a direction
+UP = 90
+DWON = 270
+LEFT = 180
+RIGHT = 0
+
 
 class Snake:
     
@@ -31,15 +37,15 @@ class Snake:
         self.head.forward(MOVE_DISTANCE) 
     
     def up(self):
-        self.head.setheading(90)
+        self.head.setheading(UP)
     
     def dwon(self):
-        self.head.setheading(270)
+        self.head.setheading(DWON)
         
     def left(self):
-        self.head.setheading(180)
+        self.head.setheading(LEFT)
     
     def right(self):
-        self.head.setheading(0)
+        self.head.setheading(RIGHT)
     
     
