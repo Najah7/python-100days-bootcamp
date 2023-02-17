@@ -14,6 +14,10 @@ def main():
     snake.setup_snake()
     
     screen.update()
+    screen.onkey(snake.up,'Up')
+    screen.onkey(snake.dwon,'Down')
+    screen.onkey(snake.right, 'Right')
+    screen.onkey(snake.left, key='Left')
     # 無限ループしない用のカウンタ
     counter_for_dev = 0
     
