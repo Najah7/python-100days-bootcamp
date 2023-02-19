@@ -25,11 +25,29 @@ class Snake:
             snake_body.color(color)
             snake_body.penup()
             snake_body.goto(x=position_x, y=self.head.ycor())
+            # NOTE:この処理により、画面の並び(しっぽ→頭)とsankeクラスのリスト（頭→しっぽ）の並びが逆になるので、以後注意
             position_x -= SIZE_OF_SQUARE
+    
+    def get_new_tail(self):
+        # get tail
+        old_tail = self.snake[-1]
+        # make new tail
+        new_tail = Turtle('square')
+        new_tail.color('white')
+        new_tail.penup()
+        # move to tail of the snake
+        new_tail.goto(old_tail.position())
+        
+        return new_tail
+        
+    
+    def extend(self):
+        new_tail = self.get_new_tail()
+        self.snake.append(new_tail)
     
     def move(self):
         # スネークの体の一部（タートル）のしっぽ側を一つ頭側に動かす処理
-        # NOTE:スネークの配列は「頭→しっぽ」という風に並んだ配列
+        # NOTE:ここで最後から一つずつ前に動かすことのよって、しっぽが伸びていくようになる。（追加した時はしっぽとしっぽの前の要素が同じ位置（同じx座標）なので、しっぽの位置は変化しない。）
         for snake_body_num in range(len(self.snake) - 1, 0, -1):
             nex_x = self.snake[snake_body_num - 1].xcor()
             nex_y = self.snake[snake_body_num - 1].ycor()
