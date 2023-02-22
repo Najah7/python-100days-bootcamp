@@ -5,7 +5,7 @@ COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
 STARTING_MOVE_DISTANCE = 5
 MOVE_INCREMENT = 10
 NUM_CARS = 150
-CAR_START_POS = 200
+CAR_START_POS = 0
 
 class Car(Turtle):
     
@@ -43,4 +43,3 @@ class CarManager:
             new_x = car.xcor() - MOVE_INCREMENT
             car.goto(new_x, car.ycor())
     
-        
