@@ -36,10 +36,10 @@ def main():
         screen.onkey(player.go_down, 'Down')
         
         # increase Score and get player back to start position  when player get to the goal
-        if player.is_at_goal():
+        if player.is_at_finish_line():
             scoreboard.increase_score()
             scoreboard.update_score_board()
-            player.back_to_start()
+            player.go_to_start()
         
         # Detect collsion with cars
         for car in car_manager.cars:
