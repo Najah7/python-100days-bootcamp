@@ -4,15 +4,16 @@ class ScoreBoard(Turtle):
     
     def __init__(self) -> None:
         super().__init__()
+        self.l_score = 0
+        self.r_score = 0
         self.init_score_board()
+        
         
     
     def init_score_board(self):
         self.color('White')
         self.penup()
         self.hideturtle()
-        self.l_score = 0
-        self.r_score = 0
         self.update_score_board()
         
         
