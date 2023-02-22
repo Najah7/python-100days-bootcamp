@@ -39,6 +39,7 @@ def main():
         if player.is_at_finish_line():
             scoreboard.increase_score()
             scoreboard.update_score_board()
+            car_manager.go_to_start()
             player.go_to_start()
         
         # Detect collsion with cars
