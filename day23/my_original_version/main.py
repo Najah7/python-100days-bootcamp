@@ -8,6 +8,7 @@ from scoreboard import Scoreboard
 CAR_SPEED = 0.1
 COLLISION_DISTANCE = 22
 
+# Screen setup
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.tracer(0)
@@ -16,29 +17,34 @@ screen.tracer(0)
 player = Player()
 scoreboard = Scoreboard()
 car_manager = CarManager()
-
-
+ 
 game_is_on = True
 while game_is_on:
     
+    # rendering setup
     time.sleep(CAR_SPEED)
     screen.update()
+    
+    # move car from right to left
     car_manager.go_left()
     
+    # handle user input
     screen.listen()
-    
     screen.onkey(player.go_up, 'Up')
     screen.onkey(player.go_down, 'Down')
     
+    # increase Score and get player back to start position  when player get to the goal
     if player.is_at_goal():
         scoreboard.increase_score()
         scoreboard.update_score_board()
         player.back_to_start()
-        
+    
+    # Detect collsion with cars
     for car in car_manager.cars:
         # HACK:車にあたった時の検知する距離感。（横が長くて、縦が短いので、値を大きくすると横を通りすぎただけで衝突した検知してしまう。）
         if player.distance(car) < COLLISION_DISTANCE:
-            # NOTE：衝突検知の距離感を調整する際に使うと便利なprint
+            
+            # NOTE：衝突検知の距離感を調整する際に使うと便利なprint （微調整用に残している）
             # print(player.distance(car))
             
             # print game over  
