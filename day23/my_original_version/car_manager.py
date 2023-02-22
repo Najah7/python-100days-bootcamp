@@ -27,9 +27,9 @@ class CarManager:
     def __init__(self) -> None:
         self.num_cars = NUM_CARS
         self.cars = [Car() for _ in range(self.num_cars)]
-        self.move_to_start_position()
+        self.go_to_start()
     
-    def move_to_start_position(self):
+    def go_to_start(self):
         for car in self.cars:
             # HACK:3000の定数化。（いい感じの名前ひらめかず） 
             # NOTE:3000は車がどのくらい通り続けるか（ゲームの長さ）を決める数字。
