@@ -37,9 +37,6 @@ def main():
     counter_for_dev = 0
     
     while True:
-        
-        
-        
         # 再レンダリングと少し動きに間を
         # NOTE:0.2秒に特に意味はない、見た感じの直感で
         screen.update()
@@ -56,15 +53,15 @@ def main():
         
         # Detect collision with wall
         if is_on_wall(snake):
-            score_board.print_game_over()
-            break
+            score_board.reset()
+            snake.reset()
 
         
         # Detect collision with tail.
         for snake_body in snake.snake[1:]:
             if not is_any_space(snake.head, snake_body):
-                score_board.print_game_over()
-                break
+                score_board.reset()
+                snake.reset()
         
         # NOTE:無限ループしないために
         # counter_for_dev += 1

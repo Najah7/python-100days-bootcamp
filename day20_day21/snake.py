@@ -72,4 +72,10 @@ class Snake:
         if self.head.heading() != LEFT:
             self.head.setheading(RIGHT)
     
+    def reset(self):
+        for body in self.snake:
+            body.goto(1000,1000)
+        self.__init__()
+        self.setup_snake()
+        self.head = self.snake[0]
     
