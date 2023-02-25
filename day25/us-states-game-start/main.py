@@ -52,13 +52,10 @@ def main():
             guessed_states.append(answer_state)
     
     # states to learn.csv
-    missing_states = []
     with open('learned.csv', 'w', newline='') as csv_file:
-        for state in all_states:
-            if state not in guessed_states:
-                missing_states.append(state)
-        new_data = pandas.DataFrame(missing_states)
-        new_data.to_csv('states_to_learn.csv')
+        missing_states = [ state for state in all_states if state not in guessed_states ]
+        df_missing_states = pandas.DataFrame(missing_states)
+        df_missing_states.to_csv('states_to_learn.csv')
         
         
     
