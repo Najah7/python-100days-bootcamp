@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import random
-import pyperclip
+import json
+# import pyperclip
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -37,7 +38,7 @@ def generate_password():
     
     password_entry.insert(0, password)
     
-    pyperclip.copy(password)
+   # pyperclip.copy(password)
     
     
 
@@ -46,6 +47,11 @@ def add():
     website_name = web_site_entry.get()
     email_or_username = email_or_username_entry.get()
     password = password_entry.get()
+    
+    new_data = {website_name: {
+        'email': email_or_username,
+        'password': password,
+    }}
     
     if len(website_name) == 0 or len(email_or_username) == 0 or len(password) == 0:
         messagebox.showinfo(title='Oops', message="Please make sure you haven't left any fields empty.")
@@ -57,13 +63,48 @@ def add():
                     f"Password: {password}\n"
                     f"Is it ok to save? "
             )
+        if is_ok:
+            try:
+                with open('saved_data.json', 'r') as json_file:
+                    website_info = json.load(json_file)
+            except FileNotFoundError:
+                with open('saved_data.json', 'w') as json_file:
+                    json.dump(new_data, json_file, indent=4)
+            else:
+                website_info.update(new_data)
+                with open('saved_data.json', 'w') as file:
+                    json.dump(website_info, file, indent=4)
+            finally:
+                web_site_entry.delete(0, END)
+                password_entry.delete(0, END)
+            
+# ---------------------------- FIND PASSWORD ------------------------------- #  
+def find_password():
+    website_name = web_site_entry.get()
     
-    if is_ok:
-        with open('passwords.txt', 'a') as file:
-            file.write(f"{website_name} | {email_or_username} | {password}\n")
-    
-        web_site_entry.delete(0, END)
-        password_entry.delete(0, END)
+    try:
+        with open('saved_data.json', 'r') as json_file:
+            saved_info = json.load(json_file)
+        website_info = saved_info[website_name]
+    except FileNotFoundError:
+        # 検索したWebサイトの情報が見つからない場合の処理
+        messagebox.showinfo(
+            title='Error',
+            message="No Data File Founnd"
+        )
+    except KeyError:
+        messagebox.showinfo(
+            title='Error',
+            message=f'No details for {website_name} exists.'
+        )
+    else:
+        messagebox.showinfo(
+            title=website_name,
+            message=f"Email: {website_info['email']}\n"
+                    f"Password: {website_info['password']}\n"
+            )
+        
+        
     
     
 # ---------------------------- UI SETUP ------------------------------- #
@@ -89,16 +130,18 @@ password_label.grid(column=0, row=3)
 
 # Textboxs
 # NOTE:columnspan：複数分のカラムを使いたい場合に使う。
-web_site_entry = Entry(width=35)
-web_site_entry.grid(column=1, row=1, columnspan=2)
+web_site_entry = Entry(width=21)
+web_site_entry.grid(column=1, row=1, columnspan=1)
 web_site_entry.focus()
 email_or_username_entry = Entry(width=35)
 email_or_username_entry.grid(column=1, row=2, columnspan=2)
 email_or_username_entry.insert(0, 'test@example.com')
-password_entry = Entry(width=17)
+password_entry = Entry(width=21)
 password_entry.grid(column=1, row=3)
 
 # buttons
+search_btn = Button(text='Search', width=13, bg='white', command=find_password)
+search_btn.grid(column=2, row=1)
 password_generator_btn = Button(text='Genarate password', bg='white', command=generate_password, width=13)
 password_generator_btn.grid(column=2, row=3)
 add_btn = Button(text='add', bg='white', width=35, command=add)
