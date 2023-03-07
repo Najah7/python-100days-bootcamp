@@ -13,6 +13,7 @@ twilio
 
 import requests
 import os
+import smtplib
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -20,6 +21,8 @@ load_dotenv()
 API_KEY = os.getenv('API_KEY')
 MY_LAT = os.getenv('MY_LAT')
 MY_LONG = os.getenv('MY_LONG')
+MY_EMAIL = os.getenv('MY_EMAIL')
+PASSWORD = os.getenv('MY_PASSWORD')
 
 OWM_ENDPONT = "https://api.openweathermap.org/data/3.0/onecall"
 
@@ -48,7 +51,16 @@ for hour_weather in hourly_weather_next_12:
         will_rain = True
         
 if will_rain:
-    print("Bring an umbrella.")
+    contents = "Bring an umbrella."
+    
+    with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
+        connection.starttls()
+        connection.login(MY_EMAIL, PASSWORD)
+        connection.sendmail(
+            from_addr=MY_EMAIL,
+            to_addrs=MY_EMAIL,
+            msg=f"Subject:look up👆\n\n{contents}"
+        )
     
     
 """
