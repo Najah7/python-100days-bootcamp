@@ -1,7 +1,12 @@
 import requests
 import os
 
+# for dev
+from pprint import pprint
+
 from flight_data import FlightData
+
+
 
 # load Environment variables
 from dotenv import load_dotenv
@@ -37,7 +42,7 @@ class FlightSearch:
             'nights_in_dst_from': 7,
             'nights_in_dst_to': 28,
             'one_for_city': 1,
-            'max_stopover': 1,
+            'max_stopover': 0,
             'cuur': 'GBP'
         }
         
@@ -48,23 +53,45 @@ class FlightSearch:
         )
         res.raise_for_status()
         
-        # print(res.json())
-        
         try:
             data = res.json()['data'][0]
         except IndexError:
             print(f"No flights found for {destination_city_code}.")
-            return None
 
-        flight_data = FlightData(
-            price=data['price'],
-            origin_city=data["route"][0]["cityFrom"],
-            origin_airport=data["route"][0]["flyFrom"],
-            destination_city=data["route"][0]["cityTo"],
-            destination_airport=data["route"][0]["flyTo"],
-            out_date=data["route"][0]["local_departure"].split("T")[0],
-            return_date=data["route"][1]["local_departure"].split("T")[0]
-        )
+            query["max_stopover"] = 1
+            res = requests.get(
+                f"{TEQULIA_ENDPOINT}/v2/search",
+                headers=headers,
+                params=query
+            )
+            
+            data = res.json()['data'][0]
+            pprint(data)
+            flight_data = FlightData(
+                price=data['price'],
+                origin_city=data["route"][0]["cityFrom"],
+                origin_airport=data["route"][0]["flyFrom"],
+                destination_city=data["route"][0]["cityTo"],
+                destination_airport=data["route"][0]["flyTo"],
+                out_date=data["route"][0]["local_departure"].split("T")[0],
+                return_date=data["route"][1]["local_departure"].split("T")[0],
+                stop_overs=1,
+                via_city=data["route"][0]['cityTo']
+            )
+            return flight_data
+        else:
+            flight_data = FlightData(
+                price=data["price"],
+                origin_city=data["route"][0]["cityFrom"],
+                origin_airport=data["route"][0]["flyFrom"],
+                destination_city=data["route"][0]["cityTo"],
+                destination_airport=data["route"][0]["flyTo"],
+                out_date=data["route"][0]["local_departure"].split("T")[0],
+                return_date=data["route"][1]["local_departure"].split("T")[0]
+            )
+            
+            return flight_data
+        
         
         # HACK:日本円に換算する処理を追加（API探して）
         print(f"{flight_data.destination_city}: £{flight_data.price}")
