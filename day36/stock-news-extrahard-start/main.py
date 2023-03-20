@@ -73,6 +73,15 @@ def main():
             content += f"Description: {article['description']}\n"
             content += "\n\n"
             
+        """
+        unicodedata.normalize()関数は、Unicode文字列を正規化するために使用されます。正規化には4つの異なる方法があります。それらは以下の通りです。
+
+        NFD (Normalization Form Canonical Decomposition)：Unicodeの正準分解形式で、重音記号などの複数の記号を1つに分解します。
+        NFC (Normalization Form Canonical Composition)：NFDで分解されたUnicode文字列を再構築し、1つの文字として正規化します。
+        NFKD (Normalization Form Compatibility Decomposition)：Unicodeの互換分解形式で、互換文字を分解します。互換文字は、異なるUnicodeコードポイントで表されるが、外観が類似している文字のことです。
+        NFKC (Normalization Form Compatibility Composition)：NFKDで分解されたUnicode文字列を再構築し、互換文字を正規化します。
+        """
+            
         content = unicodedata.normalize("NFKD", content)
         
         # send mail 
