@@ -83,14 +83,14 @@ def main():
     
     driver.quit()
     
-    send_email(book1, book2, book3)
+    send_email(book1, book2, book3, url)
     
 
     
 
-def send_email(book1, book2, book3):
+def send_email(book1, book2, book3, url):
     
-    content = unicodedata.normalize("NFKD", f"Todays's Kindle discount books are:\n1. {book1}\n2. {book2}\n3. {book3}")
+    content = unicodedata.normalize("NFKD", f"Todays's Kindle discount books are:\n1. {book1}\n2. {book2}\n3. {book3}\n URL: {url}")
     
     """send email to myself"""
     with UTF8SMTP('smtp.gmail.com', port=587) as connection:
