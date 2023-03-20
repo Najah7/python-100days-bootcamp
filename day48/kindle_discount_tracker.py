@@ -1,6 +1,8 @@
 import os
 import smtplib
 import time
+import unicodedata
+
 
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service
@@ -67,9 +69,9 @@ def main():
             break
 
     # get the book titles
-    book1 = driver.find_element(By.XPATH, '//*[@id="browse-grid-view"]/div[1]/a/div/div[2]/ul/li[1]/span/span')
-    book2 = driver.find_element(By.XPATH, '//*[@id="browse-grid-view"]/div[2]/a/div/div[2]/ul/li[1]/span/span')
-    book3 = driver.find_element(By.XPATH, '//*[@id="browse-grid-view"]/div[3]/a/div/div[2]/ul/li[1]/span/span')
+    book1 = driver.find_element(By.XPATH, '//*[@id="browse-grid-view"]/div[1]/a/div/div[2]/ul/li[1]/span/span').text
+    book2 = driver.find_element(By.XPATH, '//*[@id="browse-grid-view"]/div[2]/a/div/div[2]/ul/li[1]/span/span').text
+    book3 = driver.find_element(By.XPATH, '//*[@id="browse-grid-view"]/div[3]/a/div/div[2]/ul/li[1]/span/span').text
 
     # check the book titles (for dev)
     # print(book1.text)
@@ -81,22 +83,25 @@ def main():
     
     driver.quit()
     
-    send_email(book1.text, book2.text, book3.text)
-    
+    send_email(book1, book2, book3)
     
 
     
 
 def send_email(book1, book2, book3):
+    
+    content = unicodedata.normalize("NFKD", f"Todays's Kindle discount books are:\n1. {book1}\n2. {book2}\n3. {book3}")
+    
     """send email to myself"""
-    with smtplib.SMTP('smtp.gmail.com', port=587) as connection:
+    with UTF8SMTP('smtp.gmail.com', port=587) as connection:
         connection.starttls()
         connection.login(MY_EMAIL, EMAIL_PASSWORD)
         connection.sendmail(
             from_addr=MY_EMAIL,
             to_addrs=MY_EMAIL,
-            msg=f"Todays's Kindle discount books are:\n{book1}\n{book2}\n{book3}"
+            msg=f"Subject:Todays's Kindle discount books\n\n{content}"
         )
+    
     
 
 if __name__ == '__main__':
