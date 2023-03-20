@@ -31,6 +31,8 @@ def main():
 
     service = Service(executable_path=MS_DRIVER_PATH)
     driver = webdriver.Edge(service=service)
+    
+    # NOTE:あとでもう一度MSで試したいので、コメントアウトしておく👇
 
     # driver.get('https://www.bing.com/?setlang=ja-JP')
 
