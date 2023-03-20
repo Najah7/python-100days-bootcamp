@@ -3,6 +3,7 @@ Project Exercise Recorder on Google sheet
 """
 
 # HACK:翻訳機能を入れて日本語対応させる。
+# SOLVED:WLS2にはデフォルトで日本語フォントが入ってなかったので、インストールした。
 
 import datetime as dt
 import requests
