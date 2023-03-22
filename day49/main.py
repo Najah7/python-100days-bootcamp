@@ -1,7 +1,9 @@
 """
 HACK: GoogleのOAuthでログインした。
-    そして、OAuthの認証をブラウザ操作で行うのが難しい。（Googleの認証ボタンの取得がムズイ。）
+    そして、OAuthの認証をブラウザ操作で行うのが難しい。（Googleの認証ボタンの取得がムズイ(一回、一回要素が変化する or クラス名が変わる（ex)buttonタグ、iframeタグ..etc）)。）
     なんでどうするか考える
+    
+    NOTE: もしかしたら、ホテルで貧弱なWi-Fiなのも、関係してたり？？？
     
 NOTE:解決策NOTE
     ・シンプルにベーシック認証でアカウントを作る。
@@ -25,18 +27,28 @@ MS_DRIVER_PATH = os.getenv('MS_DRIVER_PATH')
 MY_EMAIL = os.getenv('MY_EMAIL')
 MY_PASSWD = os.getenv('My_PASSWD')
 
+
 Service = Service(executable_path=MS_DRIVER_PATH)
 driver = webdriver.Edge(service=Service)
 
 driver.get('https://www.linkedin.com/login/en')
 
-# time.sleep(3)
+time.sleep(30)
 
-# email = driver.find_element(By.ID, 'username')
-# email.send_keys(MY_EMAIL)
+google_auth = driver.find_element(By.ID, 'sign-in-with-google-button')
+google_auth.click()
 
+time.sleep(20)
 
-time.sleep(3)
+email = driver.find_element(By.ID, 'identifierId')
+email.send_keys(MY_EMAIL, Keys.ENTER)
+
+time.sleep(20)
+
+password = driver.find_element(By.NAME, 'password')
+password.send_keys(MY_PASSWD, Keys.ENTER)
+
+time.sleep(5)
 
 # google_button = driver.find_element(By.XPATH, '//*[@id="container"]/div')
 
