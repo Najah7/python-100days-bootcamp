@@ -33,20 +33,26 @@ driver = webdriver.Edge(service=Service)
 
 driver.get('https://www.linkedin.com/login/en')
 
-time.sleep(30)
+time.sleep(10)
 
 google_auth = driver.find_element(By.ID, 'sign-in-with-google-button')
 google_auth.click()
 
-time.sleep(20)
+time.sleep(10)
 
+
+google_login_window = driver.window_handles[1]
+driver.switch_to.window(google_login_window)
 email = driver.find_element(By.ID, 'identifierId')
 email.send_keys(MY_EMAIL, Keys.ENTER)
 
-time.sleep(20)
+time.sleep(4)
 
 password = driver.find_element(By.NAME, 'password')
 password.send_keys(MY_PASSWD, Keys.ENTER)
+
+linkedin_window = driver.window_handles[0]
+driver.switch_to.window(linkedin_window)
 
 time.sleep(5)
 
